@@ -1,9 +1,9 @@
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
-  
+
   // Technical Thapa youtube source
 
   const [formInput, setformInput] = useState({
@@ -18,17 +18,25 @@ function App() {
     const value = e.target.value;
     setformInput({...formInput, [name]: value})
   }
-  
-  const [records, setRecords] = useState([]);
 
+  // useEffect(()=> {
+    /*formData()*/
+  // },[])
+  const [records, setRecords] = useState([]);
   const formData = (e) => {
     e.preventDefault();
-    const newRecord = {...formInput, id: new Date().getTime().toString() }
-    setRecords([newRecord, ...records])
-    console.log(records);
-    setformInput({name: "", email: "", phone: "", password: ""});
-    
-  }
+    if(formInput.name !== "" && formInput.email !== "" && formInput.phone !== "" && formInput.password !== "") {
+      const newRecord = {...formInput, id: new Date().getTime().toString() }
+      console.log(newRecord);
+      setRecords([...records, newRecord])
+      console.log(records);
+      setformInput({name: "", email: "", phone: "", password: ""});
+    } else {
+      alert("fill the data");
+    }
+  }    
+  
+  
 
   return <section className="mainSection bg-dark p-5 d-flex justify-content-center align-items-center">
       <form action="" onSubmit={(e) => formData(e)} className="formContainer">
